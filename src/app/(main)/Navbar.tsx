@@ -1,11 +1,16 @@
-'use client'
+"use client";
 
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { UserButton } from "@clerk/nextjs";
 import { CreditCard } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { dark } from "@clerk/themes";
+import { useTheme } from "next-themes";
 
 export const Navbar = () => {
+  const { theme } = useTheme();
+
   return (
     <header className="shadow-sm">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 p-3">
@@ -21,24 +26,28 @@ export const Navbar = () => {
             AI Resume Builder
           </span>
         </Link>
-        <UserButton
-          appearance={{
-            elements: {
-              userButtonAvatarBox: {
-                width: 35,
-                height: 35,
+        <div className="flex items-center gap-3">
+          <ThemeToggle />
+          <UserButton
+            appearance={{
+              baseTheme: theme === "dark" ? dark : undefined,
+              elements: {
+                userButtonAvatarBox: {
+                  width: 35,
+                  height: 35,
+                },
               },
-            },
-          }}
-        >
-          <UserButton.MenuItems>
-            <UserButton.Link
-              label="Billing"
-              labelIcon={<CreditCard className="size-4" />}
-              href="/billing"
-            />
-          </UserButton.MenuItems>
-        </UserButton>
+            }}
+          >
+            <UserButton.MenuItems>
+              <UserButton.Link
+                label="Billing"
+                labelIcon={<CreditCard className="size-4" />}
+                href="/billing"
+              />
+            </UserButton.MenuItems>
+          </UserButton>
+        </div>
       </div>
     </header>
   );
