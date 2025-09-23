@@ -13,30 +13,37 @@ import {
 import { Input } from "@/components/ui/input";
 import { useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
+import { EditFormProps } from "@/lib/types";
 
-export const PersonalInfoForm = () => {
+export const PersonalInfoForm = ({
+  resumeData,
+  setResumeData,
+}: EditFormProps) => {
   const form = useForm<PersonalInfoValues>({
     resolver: zodResolver(personalInfoSchema),
     defaultValues: {
-      city: "",
-      country: "",
-      email: "",
-      firstName: "",
-      jobTitle: "",
-      lastName: "",
-      phone: "",
-      photo: undefined,
+      city: resumeData.firstName || "",
+      country: resumeData.lastName || "",
+      email: resumeData.email || "",
+      firstName: resumeData.firstName || "",
+      jobTitle: resumeData.jobTitle || "",
+      lastName: resumeData.lastName || "",
+      phone: resumeData.phone || "",
     },
   });
 
   useEffect(() => {
-    const { unsubscribe } = form.watch(async () => {
+    const { unsubscribe } = form.watch(async (values) => {
       const isValid = await form.trigger();
       if (!isValid) return;
+      setResumeData({
+        ...resumeData,
+        ...values,
+      });
     });
 
     return () => unsubscribe();
-  }, [form]);
+  }, [form, resumeData, setResumeData]);
 
   //   const photoInputRef = useRef<HTMLInputElement>(null);
 
