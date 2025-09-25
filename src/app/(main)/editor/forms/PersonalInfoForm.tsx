@@ -45,7 +45,7 @@ export const PersonalInfoForm = ({
     return () => unsubscribe();
   }, [form, resumeData, setResumeData]);
 
-  //   const photoInputRef = useRef<HTMLInputElement>(null);
+  const photoInputRef = useRef<HTMLInputElement>(null);
 
   return (
     <div className="mx-auto max-w-xl space-y-6">
@@ -71,10 +71,10 @@ export const PersonalInfoForm = ({
                         const file = e.target.files?.[0];
                         fieldValues.onChange(file);
                       }}
-                      //   ref={photoInputRef}
+                      ref={photoInputRef}
                     />
                   </FormControl>
-                  {/* <Button
+                  <Button
                     variant="secondary"
                     type="button"
                     onClick={() => {
@@ -85,7 +85,7 @@ export const PersonalInfoForm = ({
                     }}
                   >
                     Remove
-                  </Button> */}
+                  </Button>
                 </div>
                 <FormMessage />
               </FormItem>
