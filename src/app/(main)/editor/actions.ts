@@ -59,7 +59,8 @@ export const saveResume = async (values: ResumeValues) => {
       await del(existingResume.photoUrl);
     }
 
-    const blob = await put(`resume_photos/${path.extname(photo.name)}`, photo, {
+    const uniqueFilename = `resume_photos/${Date.now()}_${Math.random().toString(36).substring(2)}${path.extname(photo.name)}`;
+    const blob = await put(uniqueFilename, photo, {
       access: "public",
     });
 
