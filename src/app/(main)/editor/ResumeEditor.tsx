@@ -7,12 +7,19 @@ import { Footer } from "./Footer";
 import { useState } from "react";
 import { ResumeValues } from "@/lib/validation";
 import { ResumePreviewSection } from "./ResumePreviewSection";
-import { cn } from "@/lib/utils";
+import { cn, mapToResumeValues } from "@/lib/utils";
 import { useUnloadWarning } from "@/hooks/useUnloadWarning";
 import { useAutoSaveResume } from "./useAutosaveResume";
+import { ResumeServerData } from "@/lib/types";
 
-export const ResumeEditor = () => {
-  const [resumeData, setResumeData] = useState<ResumeValues>({});
+interface Props {
+  resumeToEdit: ResumeServerData | null;
+}
+
+export const ResumeEditor = ({ resumeToEdit }: Props) => {
+  const [resumeData, setResumeData] = useState<ResumeValues>(
+    resumeToEdit ? mapToResumeValues(resumeToEdit) : {},
+  );
   const [showSmResumePreview, setShowSmResumePreview] = useState(false);
 
   const { isSaving, hasUnsavedChanges } = useAutoSaveResume(resumeData);
