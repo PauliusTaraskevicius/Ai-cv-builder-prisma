@@ -35,6 +35,8 @@ export const ResumePreview = ({
       <div
         style={{ zoom: (1 / 794) * width }}
         className={cn("space-y-6 p-6", !width && "invisible")}
+        ref={contentRef}
+        id="resumePreviewContent"
       >
         {/* <pre>{JSON.stringify(resumeData, null, 2)}</pre> */}
         <PersonalInfoHeader resumeData={resumeData} />
