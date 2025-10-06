@@ -5,6 +5,9 @@ import { toast } from "sonner";
 import { WandSparkles } from "lucide-react";
 import { LoadingButton } from "@/components/LoadingButton";
 import { Button } from "@/components/ui/button";
+import { userSubscriptionLevel } from "../../SubscriptionLevelProvider";
+import usePremiumModal from "@/hooks/usePremiumModal";
+import { canUseAITools } from "@/lib/permissions";
 
 interface GenerateSummaryButtonProps {
   resumeData: ResumeValues;
@@ -15,17 +18,17 @@ export const GenerateSummaryButton = ({
   onSummaryGenerated,
   resumeData,
 }: GenerateSummaryButtonProps) => {
-  //   const subscriptionLevel = useSubscriptionLevel();
+  const subscriptionLevel = userSubscriptionLevel();
 
-  //   const premiumModal = usePremiumModal();
+  const premiumModal = usePremiumModal();
 
   const [loading, setLoading] = useState(false);
 
   async function handleClick() {
-    // if (!canUseAITools(subscriptionLevel)) {
-    //   premiumModal.setOpen(true);
-    //   return;
-    // }
+    if (!canUseAITools(subscriptionLevel)) {
+      premiumModal.setOpen(true);
+      return;
+    }
 
     try {
       setLoading(true);
